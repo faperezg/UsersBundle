@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		   xmlns="http://symfony.com/schema/dic/services"
+		   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+	<services>
+		<service id="faperezg_users.user_manager" class="FAPerezG\UsersBundle\Doctrine\UserManager" public="false">
+			<argument type="service" id="security.encoder_factory" />
+			<argument type="service" id="fos_user.util.email_canonicalizer" />
+			<argument type="service" id="fos_user.entity_manager" />
+			<argument>%fos_user.model.user.class%</argument>
+		</service>
+		<service id="faperezg_users.profile_form" class="FAPerezG\UsersBundle\Form\Type\ProfileFormType">
+			<tag name="form.type" />
+			<argument>%fos_user.model.user.class%</argument>
+		</service>
+		<service id="faperezg_users.registration_form" class="FAPerezG\UsersBundle\Form\Type\RegistrationFormType">
+			<tag name="form.type" />
+			<argument>%fos_user.model.user.class%</argument>
+		</service>
+	</services>
+</container>
