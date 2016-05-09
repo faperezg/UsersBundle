@@ -16,7 +16,7 @@
 		}
 
 		public function findUserByUsernameOrEmail ($usernameOrEmail) {
-			return $this->findUserByUsername ($usernameOrEmail);
+			return $this->findUserByEmail ($usernameOrEmail);
 		}
 
 		public function updateCanonicalFields (UserInterface $user) {
