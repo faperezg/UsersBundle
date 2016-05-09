@@ -17,5 +17,8 @@
 			<tag name="form.type" />
 			<argument>%fos_user.model.user.class%</argument>
 		</service>
+		<service id="faperezg_users.util.user_manipulator" class="FAPerezG\UsersBundle\Util\UserManipulator">
+			<argument type="service" id="faperezg_users.user_manager" />
+		</service>
 	</services>
 </container>

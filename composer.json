@@ -1,5 +1,7 @@
 {
 	"name":         "faperezg/users-bundle",
+	"type":         "symfony-bundle",
+	"description":  "Adds functionality to FOSUserBundle",
 	"authors":      [
 		{
 			"name":  "Felipe Perez",
@@ -7,8 +9,6 @@
 		}
 	],
 	"license":      "MIT",
-	"description":  "Adds functionality to FOSUserBundle",
-	"type":         "symfony-bundle",
 	"repositories": [
 		{
 			"type": "git",
@@ -27,7 +27,7 @@
 		"incenteev/composer-parameter-handler": "~2.0",
 		"friendsofsymfony/user-bundle":         "dev-master"
 	},
-	"require-dev": {
+	"require-dev":  {
 		"sensio/generator-bundle": "~3.0",
 		"symfony/phpunit-bridge":  "~2.7"
 	},

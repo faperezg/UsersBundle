@@ -12,7 +12,6 @@
 			parent::__construct ();
 			$this->username          = $this->email;
 			$this->usernameCanonical = $this->emailCanonical;
-			$this->addRole (BaseUser::ROLE_DEFAULT);
 		}
 
 		public function getFullName () {
