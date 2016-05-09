@@ -21,21 +21,22 @@ NOTE: Actually this project's composer.json requires a **non-official** version 
 - Create your User entity, extending FAPerezG\UsersBundle\Entity\User
 - Change FOSUserBundle configuration values:
 
-<pre><code>fos_user:
-        user_class: AppBundle\Entity\User
+<pre><code>
+fos_user:
+	user_class: AppBundle\Entity\User
 
-    	profile:
-        	form:
-            	type:               FAPerezG\UsersBundle\Form\Type\ProfileFormType
-            	validation_groups:  [FAPerezGUsers_Profile, Default]
+   	profile:
+       	form:
+           	type:               FAPerezG\UsersBundle\Form\Type\ProfileFormType
+           	validation_groups:  [FAPerezGUsers_Profile, Default]
 
-    	registration:
-        	form:
-            	type:               FAPerezG\UsersBundle\Form\Type\RegistrationFormType
-            	validation_groups:  [FAPerezGUsers_Registration, Default]
+   	registration:
+       	form:
+           	type:               FAPerezG\UsersBundle\Form\Type\RegistrationFormType
+           	validation_groups:  [FAPerezGUsers_Registration, Default]
 
-    	service:
-        	user_manager:           faperezg_users.user_manager
+   	service:
+       	user_manager:           faperezg_users.user_manager
 </pre></code>
 License
 -------
