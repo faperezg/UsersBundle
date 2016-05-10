@@ -1,22 +1,41 @@
 <?php
 	namespace FAPerezG\UsersBundle\Form\Type;
 
+	use FAPerezG\UsersBundle\Entity\User;
 	use Symfony\Component\Form\AbstractType;
+	use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 	use Symfony\Component\Form\Extension\Core\Type\EmailType;
 	use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 	use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 	use Symfony\Component\Form\Extension\Core\Type\TextType;
 	use Symfony\Component\Form\FormBuilderInterface;
+	use Symfony\Component\HttpFoundation\RequestStack;
+	use Symfony\Component\Intl\Intl;
 	use Symfony\Component\OptionsResolver\OptionsResolver;
 
 	class RegistrationFormType extends AbstractType {
 		private $class;
 
+		private $locale;
+
 		/**
+		 * @param RequestStack $requestStack
 		 * @param string $class The User class name
+		 * @internal param Request $request
+		 * @internal param Session $session
 		 */
-		public function __construct ($class) {
-			$this->class = $class;
+		public function __construct (RequestStack $requestStack, $class) {
+			$this->locale = $requestStack->getCurrentRequest ()->getLocale ();
+			$this->class  = $class;
+		}
+
+		private function getAvailableLocalesAsChoices () {
+			$availableLocales = [];
+			$validLocales     = User::getAvailableLocales ();
+			foreach ($validLocales as $validLocale) {
+				$availableLocales [ucwords (Intl::getLanguageBundle ()->getLanguageName ($validLocale, null, $this->locale))] = $validLocale;
+			}
+			return $availableLocales;
 		}
 
 		public function buildForm (FormBuilderInterface $builder, array $options) {
@@ -33,6 +52,14 @@
 					'first_options'   => array ('label' => 'form.password'),
 					'second_options'  => array ('label' => 'form.password_confirmation'),
 					'invalid_message' => 'fos_user.password.mismatch',
+				))->add ('locale', ChoiceType::class, array (
+					'choices'                   => $this->getAvailableLocalesAsChoices (),
+					'choices_as_values'         => true,
+					'choice_translation_domain' => false,
+					'data'                      => $this->locale,
+					'label'                     => 'label.locale',
+					'placeholder'               => '',
+					'translation_domain'        => 'FAPerezGUsersBundle',
 				));
 		}
 

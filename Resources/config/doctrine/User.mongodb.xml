@@ -6,6 +6,7 @@
         <field name="email" fieldName="email" type="string" />
         <field name="emailCanonical" fieldName="emailCanonical" type="string" />
 		<field name="fullName" fieldName="fullName" type="string" />
+		<field name="locale" fieldName="locale" type="string" />
         <field name="enabled" fieldName="enabled" type="boolean" />
         <field name="password" fieldName="password" type="string" />
         <field name="lastLogin" fieldName="lastLogin" type="date" />

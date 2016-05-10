@@ -1,6 +1,7 @@
 <?php
 	namespace FAPerezG\UsersBundle\Command;
 
+	use FAPerezG\UsersBundle\Model\User;
 	use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 	use Symfony\Component\Console\Input\InputArgument;
 	use Symfony\Component\Console\Input\InputInterface;
@@ -19,6 +20,7 @@
 					new InputArgument('email', InputArgument::REQUIRED, 'The email'),
 					new InputArgument('password', InputArgument::REQUIRED, 'The password'),
 					new InputArgument('full-name', InputArgument::OPTIONAL, 'The full name'),
+					new InputArgument('locale', InputArgument::OPTIONAL, 'The locale'),
 					new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
 					new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
 				))
@@ -29,9 +31,9 @@ The <info>fos:user:create</info> command creates a user:
 
 This interactive shell will ask you for the email of the user and then a password.
 
-You can alternatively specify the email and password and full name as the first, second and third arguments:
+You can alternatively specify the email, password, full name and locale as the first, second, third and fourth arguments:
 
-  <info>php app/console fos:user:create faperezg@gmail.com mypassword "Felipe Pérez"</info>
+  <info>php app/console fos:user:create faperezg@gmail.com mypassword "Felipe Pérez" es</info>
 
 You can create a super admin via the super-admin flag:
 
@@ -55,10 +57,11 @@ EOT
 			$email       = $input->getArgument ('email');
 			$password    = $input->getArgument ('password');
 			$fullName    = $input->getArgument ('full-name');
+			$locale      = $input->getArgument ('locale');
 			$inactive    = $input->getOption ('inactive');
 			$superadmin  = $input->getOption ('super-admin');
 			$manipulator = $this->getContainer ()->get ('faperezg_users.util.user_manipulator');
-			$manipulator->create ($email, $password, $fullName, !$inactive, $superadmin);
+			$manipulator->create ($email, $password, $fullName, $locale, !$inactive, $superadmin);
 			$output->writeln (sprintf ('Created user <comment>%s</comment>', $email));
 		}
 
@@ -111,6 +114,25 @@ EOT
 					}
 				);
 				$input->setArgument ('full-name', $fullName);
+			}
+
+			if (!$input->getArgument ('locale')) {
+				$availableLocales = User::getAvailableLocales ();
+				$locale           = $this->getHelper ('dialog')->askAndValidate (
+					$output,
+					sprintf ('Please choose the locale [%s]: ', join ('/', $availableLocales)),
+					function ($locale, $availableLocales) {
+						if (empty ($locale)) {
+							throw new \Exception ('Locale can not be empty');
+						}
+						if (!in_array ($locale, $availableLocales)) {
+							throw new \Exception (sprintf ('Locale can only be one of %s', join ('/', $availableLocales)));
+						}
+						return $locale;
+					},
+					$availableLocales
+				);
+				$input->setArgument ('locale', $locale);
 			}
 		}
 	}

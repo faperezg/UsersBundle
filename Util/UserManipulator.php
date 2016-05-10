@@ -23,15 +23,16 @@
 		 * @param string $email
 		 * @param string $password
 		 * @param string $fullName
+		 * @param string $locale
 		 * @param Boolean $active
 		 * @param Boolean $superadmin
-		 *
-		 * @return \FOS\UserBundle\Model\UserInterface
+		 * @return UserInterface
 		 */
-		public function create ($email, $password, $fullName, $active, $superadmin) {
+		public function create ($email, $password, $fullName, $locale, $active, $superadmin) {
 			$user = $this->userManager->createUser ();
 			if ($user instanceof User) {
 				$user->setFullName ($fullName);
+				$user->setLocale ($locale);
 			}
 			$user->setEmail ($email);
 			$user->setPlainPassword ($password);

@@ -6,6 +6,7 @@ This bundle extends FOSUserBundle and apply some changes.
 - Works on Symfony 2.8 or greater. (Tested only on 2.8.5)
 - Username removed from User entity. Users will be identified by email address.
 - Salt removed from User entity. That means only BCrypt is supported as password encoder.
+- Locale added to User entity. Session will have a parameter called _locale when the user is logged in.
 - Only Doctrine is supported (MongoDB and CouchDB included). No Propel support.
 - At this moment, only ES and EN translations are provided.
 
@@ -21,23 +22,26 @@ NOTE: Actually this project's composer.json requires a **non-official** version 
 - Create your User entity, extending FAPerezG\UsersBundle\Entity\User
 - Change FOSUserBundle configuration values:
 
-<pre><code>
+<pre>
+	<code>
 fos_user:
-	user_class: AppBundle\Entity\User
+    user_class: AppBundle\Entity\User
 
-   	profile:
-       	form:
-           	type:               FAPerezG\UsersBundle\Form\Type\ProfileFormType
-           	validation_groups:  [FAPerezGUsers_Profile, Default]
+    profile:
+    form:
+        type:               FAPerezG\UsersBundle\Form\Type\ProfileFormType
+        validation_groups:  [FAPerezGUsers_Profile, Default]
 
-   	registration:
-       	form:
-           	type:               FAPerezG\UsersBundle\Form\Type\RegistrationFormType
-           	validation_groups:  [FAPerezGUsers_Registration, Default]
+    registration:
+        form:
+            type:               FAPerezG\UsersBundle\Form\Type\RegistrationFormType
+            validation_groups:  [FAPerezGUsers_Registration, Default]
 
-   	service:
-       	user_manager:           faperezg_users.user_manager
-</pre></code>
+    service:
+        user_manager:           faperezg_users.user_manager
+	</code>
+</pre>
+
 License
 -------
 

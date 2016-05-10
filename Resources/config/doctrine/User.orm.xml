@@ -6,6 +6,7 @@
 		<field name="email" column="email" type="string" length="255" />
 		<field name="emailCanonical" column="email_canonical" type="string" length="255" unique="true" />
 		<field name="fullName" column="full_name" type="string" length="255" nullable="true" />
+		<field name="locale" column="locale" type="string" length="2" />
 		<field name="enabled" column="enabled" type="boolean" />
 		<field name="password" column="password" type="string" />
 		<field name="lastLogin" column="last_login" type="datetime" nullable="true" />

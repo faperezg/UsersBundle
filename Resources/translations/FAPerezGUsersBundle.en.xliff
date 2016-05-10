@@ -7,6 +7,10 @@
 				<source>label.full_name</source>
 				<target>Full name</target>
 			</trans-unit>
+			<trans-unit id="2">
+				<source>label.locale</source>
+				<target>Language</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
