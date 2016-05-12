@@ -4,13 +4,9 @@
 	use FOS\UserBundle\Model\User as BaseUser;
 	use Symfony\Component\Intl\Intl;
 	use Symfony\Component\Security\Core\User\EquatableInterface;
-	use Symfony\Component\Security\Core\User\UserInterface;
+	use Symfony\Component\Security\Core\User\UserInterface as SecurityCoreUserInterface;
 
-	abstract class User extends BaseUser implements EquatableInterface {
-		const LOCALE_DEFAULT = 'es';
-		const LOCALE_EN = 'en';
-		const LOCALE_ES = 'es';
-
+	abstract class User extends BaseUser implements UserInterface, EquatableInterface {
 		protected $id;
 
 		protected $fullName;
@@ -111,7 +107,7 @@
 			];
 		}
 
-		public function isEqualTo (UserInterface $user) {
+		public function isEqualTo (SecurityCoreUserInterface $user) {
 			if (!($user instanceof User)) {
 				return false;
 			}

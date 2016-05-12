@@ -47,7 +47,7 @@
 					'choices_as_values'         => true,
 					'choice_translation_domain' => false,
 					'label'                     => 'label.locale',
-					'placeholder'               => '',
+					'placeholder'               => 'label.locale',
 					'translation_domain'        => 'FAPerezGUsersBundle',
 				))->add ('current_password', PasswordType::class, array (
 					'label'              => 'form.current_password',

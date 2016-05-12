@@ -1,8 +1,7 @@
 <?php
 	namespace FAPerezG\UsersBundle\Util;
 
-	use FAPerezG\UsersBundle\Model\User;
-	use FOS\UserBundle\Model\UserInterface;
+	use FAPerezG\UsersBundle\Model\UserInterface;
 	use FOS\UserBundle\Model\UserManagerInterface;
 
 	class UserManipulator {
@@ -30,7 +29,7 @@
 		 */
 		public function create ($email, $password, $fullName, $locale, $active, $superadmin) {
 			$user = $this->userManager->createUser ();
-			if ($user instanceof User) {
+			if ($user instanceof UserInterface) {
 				$user->setFullName ($fullName);
 				$user->setLocale ($locale);
 			}
