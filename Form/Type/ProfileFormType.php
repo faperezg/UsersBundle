@@ -24,6 +24,7 @@
 		 * @param $class
 		 */
 		public function __construct (RequestStack $requestStack, $class) {
+			$this->locale = $requestStack->getCurrentRequest ()->getLocale ();
 			$this->class = $class;
 		}
 
@@ -47,10 +48,9 @@
 					'choices_as_values'         => true,
 					'choice_translation_domain' => false,
 					'label'                     => 'label.locale',
-					'placeholder'               => 'label.locale',
 					'translation_domain'        => 'FAPerezGUsersBundle',
 				))->add ('current_password', PasswordType::class, array (
-					'label'              => 'form.current_password',
+					'label'              => 'form.password',
 					'translation_domain' => 'FOSUserBundle',
 					'mapped'             => false,
 					'constraints'        => new UserPassword(),
