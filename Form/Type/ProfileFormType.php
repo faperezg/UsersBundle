@@ -24,6 +24,7 @@
 		 * @param $class
 		 */
 		public function __construct (RequestStack $requestStack, $class) {
+			$this->locale = $requestStack->getCurrentRequest ()->getLocale ();
 			$this->class = $class;
 		}
 
