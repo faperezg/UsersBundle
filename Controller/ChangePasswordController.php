@@ -11,7 +11,7 @@
 		 */
 		protected function setFlash ($action, $value, $translationDomain = 'FOSUserBundle') {
 			$translator = $this->container->get ('translator');
-			$locale = $this->container->get ('request_stack')->getCurrentRequest ()->getLocale ();
+			$locale     = $this->container->get ('request_stack')->getCurrentRequest ()->getLocale ();
 			$this->container->get ('session')->getFlashBag ()->set ($action, $translator->trans ($value, [], $translationDomain, $locale));
 		}
 	}
