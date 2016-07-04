@@ -1,7 +1,7 @@
 <?php
 	namespace FAPerezG\UsersBundle\Model;
 
-	use FOS\UserBundle\Model\UserInterface;
+	use FOS\UserBundle\Model\UserInterface as BaseUserInterface;
 	use FOS\UserBundle\Model\UserManager as BaseUserManager;
 	use FOS\UserBundle\Util\CanonicalizerInterface;
 	use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -19,7 +19,7 @@
 			return $this->findUserByEmail ($usernameOrEmail);
 		}
 
-		public function updateCanonicalFields (UserInterface $user) {
+		public function updateCanonicalFields (BaseUserInterface $user) {
 			$user->setEmailCanonical ($this->canonicalizeEmail ($user->getEmail ()));
 		}
 
