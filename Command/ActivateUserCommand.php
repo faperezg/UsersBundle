@@ -16,7 +16,7 @@
 				->setName ('fos:user:activate')
 				->setDescription ('Activate a user')
 				->setDefinition (array (
-					new InputArgument('email', InputArgument::REQUIRED, 'The email'),
+					new InputArgument ('email', InputArgument::REQUIRED, 'The email'),
 				))
 				->setHelp (<<<EOT
 The <info>fos:user:activate</info> command activates a user (so they will be able to log in):
@@ -38,7 +38,7 @@ EOT
 			$email       = $input->getArgument ('email');
 			$manipulator = $this->getContainer ()->get ('faperezg_users.util.user_manipulator');
 			$manipulator->activate ($email);
-			$output->writeln (sprintf ("User '$email' has been activated."));
+			$output->writeln ("User '$email' has been activated.");
 		}
 
 		/**
