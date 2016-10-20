@@ -7,6 +7,8 @@
 	use Symfony\Component\Console\Input\InputInterface;
 	use Symfony\Component\Console\Input\InputOption;
 	use Symfony\Component\Console\Output\OutputInterface;
+	use Symfony\Component\Console\Question\ChoiceQuestion;
+	use Symfony\Component\Console\Question\Question;
 
 	class CreateUserCommand extends ContainerAwareCommand {
 		/**
@@ -49,8 +51,10 @@ EOT
 
 		/**
 		 * @see Command
+		 *
 		 * @param InputInterface $input
 		 * @param OutputInterface $output
+		 *
 		 * @return int|null|void
 		 */
 		protected function execute (InputInterface $input, OutputInterface $output) {
@@ -67,71 +71,60 @@ EOT
 
 		/**
 		 * @see Command
+		 *
 		 * @param InputInterface $input
 		 * @param OutputInterface $output
 		 */
 		protected function interact (InputInterface $input, OutputInterface $output) {
 			if (!$input->getArgument ('email')) {
-				$email = $this->getHelper ('dialog')->askAndValidate (
-					$output,
-					'Please choose an email: ',
-					function ($email) {
-						if (empty($email)) {
-							throw new \Exception('Email can not be empty');
-						}
-						if (!filter_var ($email, FILTER_VALIDATE_EMAIL)) {
-							throw new \Exception (sprintf ('"%s" is not a valid email address', $email));
-						}
-						return $email;
+				$helper   = $this->getHelper ('question');
+				$question = new Question ('Please choose an email: ');
+				$question->setValidator (function ($value) {
+					if (empty ($value)) {
+						throw new \Exception ('Email can not be empty');
 					}
-				);
+					if (!filter_var ($value, FILTER_VALIDATE_EMAIL)) {
+						throw new \Exception ("'$value' is not a valid email address");
+					}
+					return $value;
+				});
+				$email = $helper->ask ($input, $output, $question);
 				$input->setArgument ('email', $email);
 			}
 
 			if (!$input->getArgument ('password')) {
-				$password = $this->getHelper ('dialog')->askAndValidate (
-					$output,
-					'Please choose a password: ',
-					function ($password) {
-						if (empty($password)) {
-							throw new \Exception('Password can not be empty');
-						}
-						return $password;
+				$helper   = $this->getHelper ('question');
+				$question = new Question ('Please choose a password: ');
+				$question->setHidden (true);
+				$question->setHiddenFallback (true);
+				$question->setValidator (function ($value) {
+					if (empty ($value)) {
+						throw new \Exception ('Password can not be empty');
 					}
-				);
+					return $value;
+				});
+				$password = $helper->ask ($input, $output, $question);
 				$input->setArgument ('password', $password);
 			}
 
 			if (!$input->getArgument ('full-name')) {
-				$fullName = $this->getHelper ('dialog')->askAndValidate (
-					$output,
-					'Please choose the full name: ',
-					function ($fullName) {
-						if (empty ($fullName)) {
-							throw new \Exception('Full name can not be empty');
-						}
-						return $fullName;
+				$helper   = $this->getHelper ('question');
+				$question = new Question ('Please choose the full name: ');
+				$question->setValidator (function ($value) {
+					if (empty ($value)) {
+						throw new \Exception ('Full name can not be empty');
 					}
-				);
+					return $value;
+				});
+				$fullName = $helper->ask ($input, $output, $question);
 				$input->setArgument ('full-name', $fullName);
 			}
 
 			if (!$input->getArgument ('locale')) {
-				$availableLocales = User::getAvailableLocales ();
-				$locale           = $this->getHelper ('dialog')->askAndValidate (
-					$output,
-					sprintf ('Please choose the locale [%s]: ', join ('/', $availableLocales)),
-					function ($locale, $availableLocales) {
-						if (empty ($locale)) {
-							throw new \Exception ('Locale can not be empty');
-						}
-						if (!in_array ($locale, $availableLocales)) {
-							throw new \Exception (sprintf ('Locale can only be one of %s', join ('/', $availableLocales)));
-						}
-						return $locale;
-					},
-					$availableLocales
-				);
+				$helper   = $this->getHelper ('question');
+				$question = new ChoiceQuestion ('Please choose the locale: ', User::getAvailableLocales (), 0);
+				$question->setErrorMessage ('Locale %s is invalid');
+				$locale = $helper->ask ($input, $output, $question);
 				$input->setArgument ('locale', $locale);
 			}
 		}
