@@ -28,39 +28,39 @@ EOT
 
 		/**
 		 * @see Command
+		 *
 		 * @param InputInterface $input
 		 * @param OutputInterface $output
+		 *
 		 * @return int|null|void
 		 */
 		protected function execute (InputInterface $input, OutputInterface $output) {
-			$email = $input->getArgument ('email');
-
+			$email       = $input->getArgument ('email');
 			$manipulator = $this->getContainer ()->get ('faperezg_users.util.user_manipulator');
 			$manipulator->activate ($email);
-
-			$output->writeln (sprintf ('User "%s" has been activated.', $email));
+			$output->writeln (sprintf ("User '$email' has been activated."));
 		}
 
 		/**
 		 * @see Command
+		 *
 		 * @param InputInterface $input
 		 * @param OutputInterface $output
 		 */
 		protected function interact (InputInterface $input, OutputInterface $output) {
 			if (!$input->getArgument ('email')) {
-				$email = $this->getHelper ('dialog')->askAndValidate (
-					$output,
-					'Please choose an email: ',
-					function ($email) {
-						if (empty($email)) {
-							throw new \Exception('Email can not be empty');
-						}
-						if (!filter_var ($email, FILTER_VALIDATE_EMAIL)) {
-							throw new \Exception (sprintf ('"%s" is not a valid email address', $email));
-						}
-						return $email;
+				$helper   = $this->getHelper ('question');
+				$question = new Question ('Please choose an email: ');
+				$question->setValidator (function ($value) {
+					if (empty($value)) {
+						throw new \Exception ('Email can not be empty');
 					}
-				);
+					if (!filter_var ($value, FILTER_VALIDATE_EMAIL)) {
+						throw new \Exception ("'$value' is not a valid email address");
+					}
+					return $value;
+				});
+				$email = $helper->ask ($input, $output, $question);
 				$input->setArgument ('email', $email);
 			}
 		}
