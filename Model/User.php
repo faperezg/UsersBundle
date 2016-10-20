@@ -43,20 +43,40 @@
 			return $this->emailCanonical;
 		}
 
+		/**
+		 * @param $fullName
+		 *
+		 * @return User
+		 */
 		public function setFullName ($fullName) {
 			$this->fullName = $fullName;
 			return $this;
 		}
 
+		/**
+		 * @param $locale
+		 *
+		 * @return User
+		 */
 		public function setLocale ($locale) {
 			$this->locale = ($locale) && (in_array ($locale, static::getAvailableLocales ())) ? $locale : static::LOCALE_DEFAULT;
 			return $this;
 		}
 
+		/**
+		 * @param string $username
+		 *
+		 * @return User
+		 */
 		public function setUsername ($username) {
 			return $this;
 		}
 
+		/**
+		 * @param string $usernameCanonical
+		 *
+		 * @return User
+		 */
 		public function setUsernameCanonical ($usernameCanonical) {
 			return $this;
 		}
