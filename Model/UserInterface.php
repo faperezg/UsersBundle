@@ -14,8 +14,18 @@
 
 		public function getLocaleName ($userLocale);
 
+		/**
+		 * @param $fullName
+		 *
+		 * @return UserInterface
+		 */
 		public function setFullName ($fullName);
 
+		/**
+		 * @param $locale
+		 *
+		 * @return UserInterface
+		 */
 		public function setLocale ($locale);
 
 		public static function getAvailableLocales ();

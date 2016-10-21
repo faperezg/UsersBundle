@@ -95,8 +95,6 @@ EOT
 			if (!$input->getArgument ('password')) {
 				$helper   = $this->getHelper ('question');
 				$question = new Question ('Please choose a password: ');
-				$question->setHidden (true);
-				$question->setHiddenFallback (true);
 				$question->setValidator (function ($value) {
 					if (empty ($value)) {
 						throw new \Exception ('Password can not be empty');
