@@ -38,7 +38,7 @@ EOT
 			$email       = $input->getArgument ('email');
 			$manipulator = $this->getContainer ()->get ('faperezg_users.util.user_manipulator');
 			$manipulator->activate ($email);
-			$output->writeln ("User '$email' has been activated.");
+			$output->writeln ("User '$email' has been activated");
 		}
 
 		/**
