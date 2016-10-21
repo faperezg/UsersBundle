@@ -1,6 +1,7 @@
 <?php
 	namespace FAPerezG\UsersBundle\Command;
 
+	use FAPerezG\UsersBundle\Model\UserInterface;
 	use FAPerezG\UsersBundle\Util\UserManipulator;
 	use Symfony\Component\Console\Output\OutputInterface;
 
@@ -24,14 +25,14 @@ EOT
 		}
 
 		protected function executeRoleCommand (UserManipulator $manipulator, OutputInterface $output, $email, $super, $role) {
-			if ($super) {
+			if (($super) || ($role == UserInterface::ROLE_SUPER_ADMIN)) {
 				$manipulator->demote ($email);
-				$output->writeln (sprintf ('User "%s" has been demoted as a simple user.', $email));
+				$output->writeln ("User '$email' has been demoted as a simple user");
 			} else {
 				if ($manipulator->removeRole ($email, $role)) {
-					$output->writeln (sprintf ('Role "%s" has been removed from user "%s".', $role, $email));
+					$output->writeln ("Role '$role' has been removed from user '$email'");
 				} else {
-					$output->writeln (sprintf ('User "%s" didn\'t have "%s" role.', $email, $role));
+					$output->writeln ("User '$email' did not have '$role' role");
 				}
 			}
 		}
