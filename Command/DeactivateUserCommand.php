@@ -5,6 +5,7 @@
 	use Symfony\Component\Console\Input\InputArgument;
 	use Symfony\Component\Console\Input\InputInterface;
 	use Symfony\Component\Console\Output\OutputInterface;
+	use Symfony\Component\Console\Question\Question;
 
 	class DeactivateUserCommand extends ContainerAwareCommand {
 		/**
@@ -35,7 +36,7 @@ EOT
 			$email    = $input->getArgument ('email');
 			$manipulator = $this->getContainer ()->get ('faperezg_users.util.user_manipulator');
 			$manipulator->deactivate ($email);
-			$output->writeln (sprintf ('User "%s" has been deactivated.', $email));
+			$output->writeln ("User '$email' has been deactivated");
 		}
 
 		/**
@@ -45,19 +46,18 @@ EOT
 		 */
 		protected function interact (InputInterface $input, OutputInterface $output) {
 			if (!$input->getArgument ('email')) {
-				$email = $this->getHelper ('dialog')->askAndValidate (
-					$output,
-					'Please choose an email: ',
-					function ($email) {
-						if (empty($email)) {
-							throw new \Exception('Email can not be empty');
-						}
-						if (!filter_var ($email, FILTER_VALIDATE_EMAIL)) {
-							throw new \Exception (sprintf ('"%s" is not a valid email address', $email));
-						}
-						return $email;
+				$helper   = $this->getHelper ('question');
+				$question = new Question ('Please choose an email: ');
+				$question->setValidator (function ($value) {
+					if (empty($value)) {
+						throw new \Exception ('Email can not be empty');
 					}
-				);
+					if (!filter_var ($value, FILTER_VALIDATE_EMAIL)) {
+						throw new \Exception ("'$value' is not a valid email address");
+					}
+					return $value;
+				});
+				$email = $helper->ask ($input, $output, $question);
 				$input->setArgument ('email', $email);
 			}
 		}
