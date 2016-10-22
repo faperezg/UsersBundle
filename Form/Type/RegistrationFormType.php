@@ -21,8 +21,6 @@
 		/**
 		 * @param RequestStack $requestStack
 		 * @param string $class The User class name
-		 * @internal param Request $request
-		 * @internal param Session $session
 		 */
 		public function __construct (RequestStack $requestStack, $class) {
 			$this->locale = $requestStack->getCurrentRequest ()->getLocale ();
