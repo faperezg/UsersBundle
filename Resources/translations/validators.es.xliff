@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" datatype="plaintext" original="file.ext">
+		<body>
+			<trans-unit id="1">
+				<source>faperezg_users.full_name.blank</source>
+				<target>Introduzca el nombre completo del usuario</target>
+			</trans-unit>
+			<trans-unit id="2">
+				<source>faperezg_users.full_name.short</source>
+				<target>El nombre completo es muy pequeño</target>
+			</trans-unit>
+			<trans-unit id="3">
+				<source>faperezg_users.full_name.long</source>
+				<target>El nombre completo es demasiado grande</target>
+			</trans-unit>
+			<trans-unit id="4">
+				<source>faperezg_users.locale.invalid</source>
+				<target>El idioma seleccionado no es válido</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -44,5 +44,34 @@
 				</option>
 			</constraint>
 		</property>
+		<property name="fullName">
+			<constraint name="NotBlank">
+				<option name="message">faperezg_users.full_name.blank</option>
+				<option name="groups">
+					<value>FAPerezGUsers_Registration</value>
+					<value>FAPerezGUsers_Profile</value>
+				</option>
+			</constraint>
+			<constraint name="Length">
+				<option name="min">2</option>
+				<option name="minMessage">faperezg_users.full_name.short</option>
+				<option name="max">254</option>
+				<option name="maxMessage">faperezg_users.full_name.long</option>
+				<option name="groups">
+					<value>FAPerezGUsers_Registration</value>
+					<value>FAPerezGUsers_Profile</value>
+				</option>
+			</constraint>
+		</property>
+		<property name="locale">
+			<constraint name="Choice">
+				<option name="callback">getAvailableLocales</option>
+				<option name="message">faperezg_users.locale.invalid</option>
+				<option name="groups">
+					<value>FAPerezGUsers_Registration</value>
+					<value>FAPerezGUsers_Profile</value>
+				</option>
+			</constraint>
+		</property>
 	</class>
 </constraint-mapping>
