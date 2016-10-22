@@ -15,13 +15,27 @@
 		private $emailCanonicalizer;
 
 		protected function setUp () {
-			$this->encoderFactory        = $this->getMockEncoderFactory ();
-			$this->emailCanonicalizer    = $this->getMockCanonicalizer ();
+			$this->encoderFactory        = $this->createMock ('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
+			$this->emailCanonicalizer    = $this->createMock ('FOS\UserBundle\Util\Canonicalizer');
 
 			$this->manager = $this->getUserManager (array (
 				$this->encoderFactory,
 				$this->emailCanonicalizer,
 			));
+		}
+
+		/**
+		 * @return \PHPUnit_Framework_MockObject_MockObject|User
+		 */
+		private function getUser () {
+			return $this->getMockBuilder ('FAPerezG\UsersBundle\Model\User')
+				->getMockForAbstractClass ();
+		}
+
+		private function getUserManager (array $args) {
+			return $this->getMockBuilder ('FAPerezG\UsersBundle\Model\UserManager')
+				->setConstructorArgs ($args)
+				->getMockForAbstractClass ();
 		}
 
 		public function testUpdateCanonicalFields () {
@@ -39,7 +53,7 @@
 		}
 
 		public function testUpdatePassword () {
-			$encoder = $this->getMockPasswordEncoder ();
+			$encoder = $this->createMock ('Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface');
 			$user    = $this->getUser ();
 			$user->setPlainPassword ('password');
 
@@ -103,31 +117,5 @@
 				->will ($this->returnValue ('jack@email.org'));
 
 			$this->manager->findUserByUsernameOrEmail ('JaCk@EmAiL.oRg');
-		}
-
-		private function getMockCanonicalizer () {
-			return $this->getMock ('FOS\UserBundle\Util\Canonicalizer');
-		}
-
-		private function getMockEncoderFactory () {
-			return $this->getMock ('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
-		}
-
-		private function getMockPasswordEncoder () {
-			return $this->getMock ('Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface');
-		}
-
-		/**
-		 * @return \PHPUnit_Framework_MockObject_MockObject|User
-		 */
-		private function getUser () {
-			return $this->getMockBuilder ('FAPerezG\UsersBundle\Model\User')
-				->getMockForAbstractClass ();
-		}
-
-		private function getUserManager (array $args) {
-			return $this->getMockBuilder ('FAPerezG\UsersBundle\Model\UserManager')
-				->setConstructorArgs ($args)
-				->getMockForAbstractClass ();
 		}
 	}

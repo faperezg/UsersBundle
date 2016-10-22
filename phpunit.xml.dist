@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit colors="true">
-    <testsuites>
-        <testsuite name="FAPerezGUsersBundle test suite">
-            <directory suffix="Test.php">./Tests</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory>./</directory>
-            <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
-                <directory>./vendor</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
+		 backupGlobals="false"
+		 colors="true"
+		 bootstrap="./Tests/bootstrap.php"
+>
+	<php>
+		<server name="KERNEL_DIR" value="../../../app" />
+	</php>
+	<testsuites>
+		<testsuite name="FAPerezGUsersBundle test suite">
+			<directory suffix="Test.php">./Tests</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist>
+			<directory>./</directory>
+			<exclude>
+				<directory>./Resources</directory>
+				<directory>./Tests</directory>
+				<directory>./vendor</directory>
+			</exclude>
+		</whitelist>
+	</filter>
 </phpunit>
