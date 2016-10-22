@@ -1,6 +1,7 @@
 <?php
 	namespace FAPerezG\UsersBundle\Command;
 
+	use FAPerezG\UsersBundle\Model\UserInterface;
 	use FAPerezG\UsersBundle\Util\UserManipulator;
 	use Symfony\Component\Console\Output\OutputInterface;
 
@@ -24,14 +25,14 @@ EOT
 		}
 
 		protected function executeRoleCommand (UserManipulator $manipulator, OutputInterface $output, $email, $super, $role) {
-			if ($super) {
+			if (($super) || ($role == UserInterface::ROLE_SUPER_ADMIN)) {
 				$manipulator->promote ($email);
-				$output->writeln (sprintf ('User "%s" has been promoted as a super administrator.', $email));
+				$output->writeln ("User '$email' has been promoted as a super administrator");
 			} else {
 				if ($manipulator->setRole ($email, $role)) {
-					$output->writeln (sprintf ('Role "%s" has been added to user "%s".', $role, $email));
+					$output->writeln ("Role '$role' has been added to user '$email'");
 				} else {
-					$output->writeln (sprintf ('User "%s" did already have "%s" role.', $email, $role));
+					$output->writeln ("User '$email' did already have '$role' role.");
 				}
 			}
 		}
