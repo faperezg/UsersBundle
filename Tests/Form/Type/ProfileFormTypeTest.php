@@ -17,6 +17,7 @@
 		private $requestStack;
 
 		protected function setUp () {
+			gc_enable ();
 			$request = new Request ();
 			$request->setLocale ('es');
 			$this->requestStack = new RequestStack ();
@@ -32,6 +33,7 @@
 		protected function tearDown () {
 			parent::tearDown ();
 			unset ($this->requestStack, $this->factory);
+			gc_collect_cycles ();
 		}
 
 		protected function getExtensions () {

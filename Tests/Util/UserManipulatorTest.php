@@ -75,6 +75,7 @@
 			if (!interface_exists ('Doctrine\Common\Persistence\ObjectManager')) {
 				$this->markTestSkipped ('Doctrine Common has to be installed for this test to run.');
 			}
+			gc_enable ();
 			parent::setUp ();
 			$this->canonicalizer   = new Canonicalizer ();
 			$this->userManager = $this->getUserManager ($this->canonicalizer);
@@ -84,6 +85,7 @@
 		protected function tearDown () {
 			unset ($this->userManipulator, $this->canonicalizer, $this->userManager);
 			parent::tearDown ();
+			gc_collect_cycles ();
 		}
 
 		public function testCreate () {

@@ -42,6 +42,7 @@
 		}
 
 		protected function setUp () {
+			gc_enable ();
 			parent::setUp ();
 			$commandClass = $this->getCommandClassName ();
 			if ((!$commandClass) || (!class_exists ($commandClass))) {
@@ -71,6 +72,7 @@
 			unset ($this->userManager, $this->commandTester, $this->helper, $this->command);
 			self::ensureKernelShutdown ();
 			parent::tearDown ();
+			gc_collect_cycles ();
 		}
 
 		abstract protected function getCommandClassName ();

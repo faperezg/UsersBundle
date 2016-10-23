@@ -15,6 +15,7 @@
 		private $emailCanonicalizer;
 
 		protected function setUp () {
+			gc_enable ();
 			$this->encoderFactory        = $this->createMock ('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
 			$this->emailCanonicalizer    = $this->createMock ('FOS\UserBundle\Util\Canonicalizer');
 
@@ -22,6 +23,11 @@
 				$this->encoderFactory,
 				$this->emailCanonicalizer,
 			));
+		}
+
+		protected function tearDown () {
+			parent::tearDown ();
+			gc_collect_cycles ();
 		}
 
 		/**

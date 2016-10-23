@@ -28,6 +28,7 @@
 		}
 
 		protected function setUp () {
+			gc_enable ();
 			parent::setUp ();
 			$this->kernel = $this->createMock ('\Symfony\Component\HttpKernel\HttpKernelInterface');
 		}
@@ -35,6 +36,7 @@
 		protected function tearDown () {
 			unset ($this->kernel);
 			parent::tearDown ();
+			gc_collect_cycles ();
 		}
 
 		public function testOnKernelRequestWithNoSessionParameterOrRoutingParameter () {

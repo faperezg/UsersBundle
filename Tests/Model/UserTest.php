@@ -4,6 +4,16 @@
 	use FAPerezG\UsersBundle\Model\User;
 
 	class UserTest extends \PHPUnit_Framework_TestCase {
+		protected function setUp () {
+			gc_enable ();
+			parent::setUp ();
+		}
+
+		protected function tearDown () {
+			parent::tearDown ();
+			gc_collect_cycles ();
+		}
+
 		public function testEmail () {
 			$user = $this->getUser ();
 			$this->assertNull ($user->getEmail ());

@@ -39,7 +39,7 @@
 			if (!interface_exists ('Doctrine\Common\Persistence\ObjectManager')) {
 				$this->markTestSkipped ('Doctrine Common has to be installed for this test to run.');
 			}
-
+			gc_enable ();
 			$c     = new Canonicalizer ();
 			$class = $this->createMock ('Doctrine\Common\Persistence\Mapping\ClassMetadata');
 			$ef    = $this->createMock ('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
@@ -60,6 +60,11 @@
 				->method ('getName')
 				->will ($this->returnValue (self::USER_CLASS));
 			$this->userManager = $this->createUserManager ($ef, $c, $this->om, self::USER_CLASS);
+		}
+
+		protected function tearDown () {
+			parent::tearDown ();
+			gc_collect_cycles ();
 		}
 
 		public function testDeleteUser () {

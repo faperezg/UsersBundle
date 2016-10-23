@@ -10,6 +10,16 @@
 	use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 	class UserLocaleListenerTest extends \PHPUnit_Framework_TestCase {
+		protected function setUp () {
+			gc_enable ();
+			parent::setUp ();
+		}
+
+		protected function tearDown () {
+			parent::tearDown ();
+			gc_collect_cycles ();
+		}
+
 		public function testOnKernelRequest () {
 			$expectedLocale = 'anything';
 
